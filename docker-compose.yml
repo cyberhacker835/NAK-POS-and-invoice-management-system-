@@ -1,0 +1,17 @@
+version: "3.9"
+services:
+  backend:
+    build: ./backend
+    ports:
+      - "8000:8000"
+    volumes:
+      - ./backend:/app
+      - ./backend/uploads:/app/uploads
+    environment:
+      - ENV=development
+      - DATABASE_URL=sqlite:///./data.db
+      - SECRET_KEY=dev-secret-change-me
+      - ACCESS_TOKEN_EXPIRE_MINUTES=120
+      - UPLOAD_DIR=./uploads
+    command: uvicorn app.main:app --host 0.0.0.0 --port 8000 --reload
+
